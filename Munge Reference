@@ -1,0 +1,17 @@
+# Munge-InedoLib.ps1
+
+$pkgName = "Inedo.ExecutionEngine"
+$pkgProjFile= "C:\Projects\Inedo.ExecutionEngine\Inedo.ExecutionEngine\Inedo.ExecutionEngine.csproj"
+
+$slnFile = "C:\Projects\Otter\src\Otter.sln"
+$projFilesToMunge = @( `
+  "C:\Projects\Otter\src\Otter.Service\Otter.Service.csproj", `
+  "C:\Projects\Otter\src\Otter.WebApplication\Otter.WebApplication.csproj", `
+  "C:\Projects\Otter\src\OtterCoreEx\OtterCoreEx.csproj" `
+)
+
+dotnet sln $slnFile add $pkgProjFile
+foreach ($projFile in $projFilesToMunge) {
+  dotnet remove $projFile package $pkgName
+  dotnet add $projFile reference $libProjFile
+}
